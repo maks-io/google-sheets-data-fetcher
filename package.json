@@ -1,6 +1,6 @@
 {
   "name": "google-sheets-data-fetcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fetch data from one or multiple google sheets, without any API key.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
