@@ -1,22 +1,29 @@
-import { IRawData } from "../IRawData";
+import { IRawData } from "../types/IRawData";
+import { IResultRowsOriented } from "../types/IResults";
 
-export const convertToOutputFormatRows = (rawData: IRawData) => {
+export const convertToOutputFormatRows = (
+  rawData: IRawData
+): IResultRowsOriented => {
   const {
     table: { rows: rs, cols: cs },
   } = rawData;
 
-  const rows = {};
+  const rows: IResultRowsOriented = {};
 
   rs.forEach((r, rowIndex) => {
-    const row = {
+    rows[rowIndex] = {
       id: rowIndex,
       columns: {},
     };
     cs.forEach((column, columnIndex) => {
       const { id, label, type } = column;
-      row.columns[id] = { id, label, type, data: r.c[columnIndex]?.v };
+      rows[rowIndex].columns[id] = {
+        id,
+        label,
+        type,
+        data: r.c[columnIndex]?.v,
+      };
     });
-    rows[rowIndex] = row;
   });
 
   return rows;

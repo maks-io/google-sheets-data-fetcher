@@ -1,23 +1,28 @@
-import { IRawData } from "../IRawData";
+import { IRawData } from "../types/IRawData";
+import { IResultColumnsOriented } from "../types/IResults";
 
-export const convertToOutputFormatColumns = (rawData: IRawData) => {
+export const convertToOutputFormatColumns = (
+  rawData: IRawData
+): IResultColumnsOriented => {
   const {
     table: { rows: rs, cols: cs },
   } = rawData;
 
-  const columns = {};
+  const columns: IResultColumnsOriented = {};
 
   cs.forEach((col, colIndex) => {
-    const column = {
+    columns[col.id] = {
       id: col.id,
       label: col.label,
       type: col.type,
       rows: {},
     };
     rs.forEach((row, rowIndex) => {
-      column.rows[rowIndex] = row.c[colIndex]?.v;
+      columns[col.id].rows[rowIndex] = {
+        id: rowIndex,
+        data: row.c[colIndex]?.v,
+      };
     });
-    columns[col.id] = column;
   });
 
   return columns;

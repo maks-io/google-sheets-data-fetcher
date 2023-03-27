@@ -1,4 +1,4 @@
-import { IRawData } from "../IRawData";
+import { IRawData } from "../types/IRawData";
 
 export const fetchDataFromOneGoogleSheet = async (
   googleSheetId: string,

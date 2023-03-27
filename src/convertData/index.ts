@@ -1,17 +1,28 @@
-import { IOutputFormat } from "../IOutputFormat";
+import { IOutputFormat } from "../types/IOutputFormat";
 import { convertToOutputFormatColumns } from "./convertToOutputFormatColumns";
 import { convertToOutputFormatRows } from "./convertToOutputFormatRows";
-import { IRawData } from "../IRawData";
+import { IRawData } from "../types/IRawData";
+import {
+  IResultCollection,
+  IResultColumnsOriented,
+  IResultRaw,
+  IResultRowsOriented,
+} from "../types/IResults";
 
 export const convertData = (
   rawData: IRawData,
   outputFormats: IOutputFormat[]
-): any => {
+):
+  | IResultCollection
+  | IResultRaw
+  | IResultColumnsOriented
+  | IResultRowsOriented
+  | { error: true } => {
   if (!rawData || Object.keys(rawData).length === 0) {
     return { error: true };
   }
 
-  const output: { [format in IOutputFormat]?: any } = {};
+  const output: IResultCollection = {};
 
   if (outputFormats.includes("JSON_RAW")) {
     output.JSON_RAW = rawData;

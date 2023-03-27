@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { fetchGoogleSheetsData } from "./index";
-import { IGoogleSheetsData } from "./IGoogleSheetsData";
+import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
 
 const argv = require("minimist")(process.argv.slice(2));
 

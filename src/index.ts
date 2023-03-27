@@ -1,7 +1,7 @@
 import { fetchDataFromOneGoogleSheet } from "./fetchData/fetchDataFromOneGoogleSheet";
 import { convertData } from "./convertData";
-import { IGoogleSheetsData } from "./IGoogleSheetsData";
-import { IOutputFormat } from "./IOutputFormat";
+import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
+import { IOutputFormat } from "./types/IOutputFormat";
 import * as fs from "fs";
 
 export const fetchGoogleSheetsData = async (
