@@ -14,7 +14,7 @@ Fetch data from one or multiple google sheets, without any API key.
 - 2 usages:
   - as classical package/dependency
   - via cli/command line
-- small package size ( < 25kB )
+- small package size ( < 35kB )
 - written in typescript
 - tested via Jest
 
