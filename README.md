@@ -20,8 +20,6 @@ Fetch data from one or multiple google sheets, without any API key.
 
 ## Installation
 
-_Note: This package requires a node version >= 17.5.0 due to using node's internal `fetch`._
-
 ### For cli / command line usage
 
 If you want to use the `google-sheet-data-fetcher` as a command line tool you have 2 options - you can either use it directly via `npx` or install it globally on your system.
@@ -77,14 +75,14 @@ Use these kind of id's according to your desired outcomes (command line fetch, e
 If you installed it for cli usage as described above, you can afterwards just use it on the command line by typing `gsdf` (short for `google-sheet-data-fetcher`), followed by appropriate options. To see available options, type `gsdf --help`, or check the following table:
 
 | Argument                 | Required? | Description                                                                                                                                                                                                                                                                                                                                                     | example                                                                                                                                                                  |
-| ------------------------ | --------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ------------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `-s <sheet-ids>`         | yes       | The `-s` argument must be followed by one main sheet id (required, corresponding to the green part in the example URL above) and can also be followed by additional "sub sheet" ids, separated by `,`. The resulting `<ids>` value must be one continuous string.                                                                                               | `-s abcde,0,468,11111`<br/><br/>This argument would target one google sheet (via `abcde`) and 3 of its sub sheets. Note how there's no space between the individual ids. |
-| `-f <output-format>`     | yes       | The `-f` argument represents the desired output format, which can be one of `JSON_RAW`, `JSON_COLUMNS`, `JSON_ROWS`. Note that for the cli usage you can only provide one of these at a time (as opposed to in dependency usage, see further below). Details regarding output formats [can be found below](#output-formats).                                    | `-f JSON_COLUMNS`                                                                                                                                                        |
+| `-f <output-format>`     | yes       | The `-f` argument represents the desired output format, which can be one of `JSON_RAW`, `JSON_COLUMNS`, `JSON_ROWS`, `CSV`. Note that for the cli usage you can only provide one of these at a time (as opposed to in dependency usage, see further below). Details regarding output formats [can be found below](#output-formats).                             | `-f JSON_COLUMNS`                                                                                                                                                        |
 | `-o <output-file-names>` | no        | The `-o` argument is optional and represents the desired output file name. Similarly to the `-s` flag above you can provide multiple output file names by separating them with `,` - and in case you provide multiple (sub) sheets, you also have to - in other words, the number of fetched (sub) sheets must correspond to the number of provided file names. | `-o 1stSheet.json,2ndSheet.json`                                                                                                                                         |
 
 #### Getting data from multiple google sheets at once
 
-The flags above can be provided multiple times, in case you need to fetch data from multiple google sheets at once.
+The `-s` and `-o` flags above can be provided multiple times, in case you need to fetch data from multiple google sheets at once.
 
 Example:
 `gsdf -f JSON_COLUMNS -s 19VnV0Hu0IcwkIqUJndKeUNSSne2OvpLKSSccDiHPmw4,0,1086688112 -s 197U_3ZQaL7jN0sPZvKPhQRN-1tKfwr_VXL09b8W5zpI -o a1.json,a2.json -o b.json
@@ -227,5 +225,22 @@ interface RowFormat {
 
 </td>
 </tr>
+<tr>
+<td>
 
-</tr></table>
+`"CSV"`
+
+</td>
+<td>
+Returns the data as a single string representing a classical csv format:
+
+`,` as cell separators,
+
+`"` as cell value holders
+
+and newlines `\n` as data entry separators
+
+</td>
+</tr>
+
+</table>

@@ -32,5 +32,8 @@ export type IResultCollection = {
   [format in IOutputFormat]?:
     | IResultRaw
     | IResultColumnsOriented
-    | IResultRowsOriented;
+    | IResultRowsOriented
+    | IResultCSV;
 };
+
+export type IResultCSV = string;

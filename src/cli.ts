@@ -1,11 +1,28 @@
 #!/usr/bin/env node
-
-import { fetchGoogleSheetsData } from "./index";
+import updateNotifier from "update-notifier";
+import minimist from "minimist";
+import { fetchGoogleSheetsData } from "./index.js";
 import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
+import { getHelp } from "./getHelp.js";
+import * as fs from "fs";
 
-const argv = require("minimist")(process.argv.slice(2));
+const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
+updateNotifier({
+  pkg: {
+    name: packageJson.name,
+    version: packageJson.version,
+  },
+  updateCheckInterval: 1000 * 60 * 60 * 24, // 1 day
+}).notify();
 
-const { f, s, o } = argv;
+const argv = minimist(process.argv.slice(2));
+
+const { h, help, f, s, o } = argv;
+
+if (h || help) {
+  console.log(getHelp(true));
+  process.exit(0);
+}
 
 const allowedFormats = ["JSON_RAW", "JSON_COLUMNS", "JSON_ROWS"];
 
@@ -15,11 +32,13 @@ if (f && !allowedFormats.includes(f)) {
       ", "
     )}`
   );
+  console.log(getHelp());
   process.exit(1);
 }
 
 if (!s) {
   console.error(`ERROR: A minimum of 1 sheet must be provided via -s flag`);
+  console.log(getHelp());
   process.exit(1);
 }
 
@@ -30,6 +49,7 @@ if (usedOutputFiles && usedSheets.length !== usedOutputFiles.length) {
   console.error(
     `ERROR: ${usedSheets.length} sheet(s) provided, but ${usedOutputFiles.length} output file destination(s) provided. The number must be equal.`
   );
+  console.log(getHelp());
   process.exit(1);
 }
 

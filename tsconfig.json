@@ -9,7 +9,8 @@
     "declaration": true,
     "paths": {
       "$/*": ["./src/*"]
-    }
+    },
+    "module": "ES6"
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/*.spec.ts"]

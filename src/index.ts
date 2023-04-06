@@ -1,5 +1,5 @@
-import { fetchDataFromOneGoogleSheet } from "./fetchData/fetchDataFromOneGoogleSheet";
-import { convertData } from "./convertData";
+import { fetchDataFromOneGoogleSheet } from "./fetchData/fetchDataFromOneGoogleSheet.js";
+import { convertData } from "./convertData/index.js";
 import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
 import { IOutputFormat } from "./types/IOutputFormat";
 import * as fs from "fs";
@@ -32,12 +32,19 @@ export const fetchGoogleSheetsData = async (
   );
   const data = await Promise.all(promises);
 
-  const result = {};
+  let result = {};
   googleSheetsData.forEach(({ sheetId, subSheetsIds = ["0"] }, sheetIndex) => {
     result[sheetId] = {};
     subSheetsIds.forEach((ssid, subSheetIndex) => {
-      result[sheetId][ssid] = data[sheetIndex][subSheetIndex];
+      if (subSheetsIds.length === 1) {
+        result[sheetId] = data[sheetIndex][subSheetIndex];
+      } else {
+        result[sheetId][ssid] = data[sheetIndex][subSheetIndex];
+      }
     });
+    if (googleSheetsData.length === 1) {
+      result = result[sheetId];
+    }
   });
 
   return result;

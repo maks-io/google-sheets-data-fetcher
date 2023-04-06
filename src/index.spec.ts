@@ -1,7 +1,6 @@
 import { fetchGoogleSheetsData } from "./index";
 import { config } from "./config";
 import { IOutputFormat } from "./types/IOutputFormat";
-import * as fs from "fs";
 
 describe("tests for fetchGoogleSheetsData()", () => {
   it("fetches data for one sheet and the first sub sheet (only providing the main sheet id)", async () => {
@@ -12,9 +11,7 @@ describe("tests for fetchGoogleSheetsData()", () => {
     const outputFormats: IOutputFormat[] = ["JSON_COLUMNS"];
     const result = await fetchGoogleSheetsData(files, outputFormats);
 
-    expect(result).toEqual({
-      [sheetId]: { ["0"]: expectedDataBasic[sheetId]["0"].JSON_COLUMNS },
-    });
+    expect(result).toEqual(expectedDataBasic[sheetId]["0"].JSON_COLUMNS);
   });
   it("fetches data for one sheet and the first sub sheet (by explicitly providing the sub sheet id)", async () => {
     const {
@@ -24,9 +21,7 @@ describe("tests for fetchGoogleSheetsData()", () => {
     const outputFormats: IOutputFormat[] = ["JSON_COLUMNS"];
     const result = await fetchGoogleSheetsData(files, outputFormats);
 
-    expect(result).toEqual({
-      [sheetId]: { ["0"]: expectedDataBasic[sheetId]["0"].JSON_COLUMNS },
-    });
+    expect(result).toEqual(expectedDataBasic[sheetId]["0"].JSON_COLUMNS);
   });
   it("fetches data for one sheet and the second sub sheet (by explicitly providing the sub sheet id)", async () => {
     const {
@@ -36,11 +31,9 @@ describe("tests for fetchGoogleSheetsData()", () => {
     const outputFormats: IOutputFormat[] = ["JSON_COLUMNS"];
     const result = await fetchGoogleSheetsData(files, outputFormats);
 
-    expect(result).toEqual({
-      [sheetId]: {
-        ["1086688112"]: expectedDataBasic[sheetId]["1086688112"].JSON_COLUMNS,
-      },
-    });
+    expect(result).toEqual(
+      expectedDataBasic[sheetId]["1086688112"].JSON_COLUMNS
+    );
   });
   it("fetches data for multiple sheets and multiple sub sheets, and uses one output format", async () => {
     const { file1, file2 } = config.demoFiles;
@@ -84,6 +77,28 @@ describe("tests for fetchGoogleSheetsData()", () => {
     const result = await fetchGoogleSheetsData(files, outputFormats);
 
     expect(result).toEqual(expectedDataMergedCells);
+  });
+  it("fetches data for one sheet (1st subsheet only) and turns it into CSV format", async () => {
+    const {
+      file1: { sheetId },
+    } = config.demoFiles;
+    const files = [{ sheetId }];
+    const outputFormats: IOutputFormat[] = ["CSV"];
+    const result = await fetchGoogleSheetsData(files, outputFormats);
+
+    expect(result).toEqual(expectedDataCSV);
+  });
+  it("fetches data for a tricky sheet for CSV format", async () => {
+    const {
+      file4: { sheetId },
+    } = config.demoFiles;
+    const files = [{ sheetId }];
+    const outputFormats: IOutputFormat[] = ["CSV"];
+    const result = await fetchGoogleSheetsData(files, outputFormats);
+
+    console.log("DEBUG", result);
+
+    expect(result).toEqual(expectedDataCSVTricky);
   });
 });
 
@@ -1862,64 +1877,71 @@ const expectedDataBasic = {
 };
 
 const expectedDataMergedCells = {
-  "1nRMg9IWgjsYi3xlrFAORCTSn6HTFy5RaRDOcM3CBNUw": {
+  JSON_COLUMNS: {
+    A: {
+      id: "A",
+      label: "",
+      type: "string",
+      rows: {
+        "0": {
+          id: 0,
+          data: "Some merged columns",
+        },
+        "1": {
+          id: 1,
+          data: "Some merged rows",
+        },
+        "2": {
+          id: 2,
+          data: "Some merged columns + rows",
+        },
+      },
+    },
+  },
+  JSON_ROWS: {
     "0": {
-      JSON_COLUMNS: {
+      id: 0,
+      columns: {
         A: {
           id: "A",
           label: "",
           type: "string",
-          rows: {
-            "0": {
-              id: 0,
-              data: "Some merged columns",
-            },
-            "1": {
-              id: 1,
-              data: "Some merged rows",
-            },
-            "2": {
-              id: 2,
-              data: "Some merged columns + rows",
-            },
-          },
+          data: "Some merged columns",
         },
       },
-      JSON_ROWS: {
-        "0": {
-          id: 0,
-          columns: {
-            A: {
-              id: "A",
-              label: "",
-              type: "string",
-              data: "Some merged columns",
-            },
-          },
+    },
+    "1": {
+      id: 1,
+      columns: {
+        A: {
+          id: "A",
+          label: "",
+          type: "string",
+          data: "Some merged rows",
         },
-        "1": {
-          id: 1,
-          columns: {
-            A: {
-              id: "A",
-              label: "",
-              type: "string",
-              data: "Some merged rows",
-            },
-          },
-        },
-        "2": {
-          id: 2,
-          columns: {
-            A: {
-              id: "A",
-              label: "",
-              type: "string",
-              data: "Some merged columns + rows",
-            },
-          },
+      },
+    },
+    "2": {
+      id: 2,
+      columns: {
+        A: {
+          id: "A",
+          label: "",
+          type: "string",
+          data: "Some merged columns + rows",
         },
       },
     },
   },
 };
+
+const expectedDataCSV =
+  `"monday","tuesday","wednesday","thursday","friday","","","","","","","","","","","","","","","","","","","","",""\n` +
+  `"taskA","taskB","taskC","taskA","taskB","","","","","","","","","","","","","","","","","","","","",""\n` +
+  `"taskB","","","taskC","","","","","","","","","","","","","","","","","","","","","",""\n` +
+  `"taskC","","","","","","","","","","","","","","","","","","","","","","","","",""`;
+
+const expectedDataCSVTricky =
+  `"A cell with some \\" included",""\n` +
+  `"Another cell with \\" 2 \\" included",""\n` +
+  `" ","<- cell with 1 empty space"`;
