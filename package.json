@@ -1,6 +1,6 @@
 {
   "name": "google-sheets-data-fetcher",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Fetch data from one or multiple google sheets, without any API key.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -12,8 +12,9 @@
     "clear-build-folder": "rm -rf ./build",
     "transpile": "tsc",
     "fix-paths": "tsc-alias",
+    "fix-src-paths": "cd build && mv ./src/* . && rm -rf ./src",
     "make-cli-executable": "chmod +x ./build/cli.js",
-    "build": "yarn clear-build-folder && yarn transpile && yarn fix-paths && yarn make-cli-executable",
+    "build": "yarn clear-build-folder && yarn transpile && yarn fix-paths && yarn fix-src-paths && yarn make-cli-executable",
     "dev": "yarn nodemon",
     "test": "jest"
   },

@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 import updateNotifier from "update-notifier";
 import minimist from "minimist";
+import packageJson from "../package.json";
 import { fetchGoogleSheetsData } from "./index.js";
 import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
 import { getHelp } from "./getHelp.js";
-import * as fs from "fs";
 
-const packageJson = JSON.parse(fs.readFileSync("../package.json", "utf-8"));
 updateNotifier({
-  pkg: {
-    name: packageJson.name,
-    version: packageJson.version,
-  },
+  pkg: packageJson,
   updateCheckInterval: 1000 * 60 * 60 * 24, // 1 day
 }).notify();
 
