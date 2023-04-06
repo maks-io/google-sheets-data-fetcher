@@ -10,7 +10,7 @@
     "paths": {
       "$/*": ["./src/*"]
     },
-    "module": "ES6",
+    "module": "ESNext",
     "resolveJsonModule": true,
     "rootDir": "."
   },

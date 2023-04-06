@@ -96,8 +96,6 @@ describe("tests for fetchGoogleSheetsData()", () => {
     const outputFormats: IOutputFormat[] = ["CSV"];
     const result = await fetchGoogleSheetsData(files, outputFormats);
 
-    console.log("DEBUG", result);
-
     expect(result).toEqual(expectedDataCSVTricky);
   });
 });

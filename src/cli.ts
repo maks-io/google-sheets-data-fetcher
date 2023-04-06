@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import updateNotifier from "update-notifier";
 import minimist from "minimist";
-import packageJson from "../package.json";
+import packageJson from "../package.json" assert { type: "json" };
 import { fetchGoogleSheetsData } from "./index.js";
 import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
 import { getHelp } from "./getHelp.js";
