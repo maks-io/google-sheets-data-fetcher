@@ -6,7 +6,7 @@ import { IGoogleSheetsData } from "./types/IGoogleSheetsData";
 import { getHelp } from "./getHelp.js";
 import * as fs from "fs";
 
-const packageJson = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
+const packageJson = JSON.parse(fs.readFileSync("../package.json", "utf-8"));
 updateNotifier({
   pkg: {
     name: packageJson.name,
