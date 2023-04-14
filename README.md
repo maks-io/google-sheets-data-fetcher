@@ -10,11 +10,12 @@ Fetch data from one or multiple google sheets, without any API key.
 
 - no api key required
 - fetch multiple sheets and/or "sub sheets" at once
-- write data to separate output json files
+- output as json objects or csv
+- write data to separate output files
 - 2 usages:
   - as classical package/dependency
   - via cli/command line
-- small package size ( < 35kB )
+- small package size ( < 40kB )
 - written in typescript
 - tested via Jest
 
