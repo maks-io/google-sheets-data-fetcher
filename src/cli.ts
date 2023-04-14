@@ -13,14 +13,19 @@ updateNotifier({
 
 const argv = minimist(process.argv.slice(2));
 
-const { h, help, f, s, o } = argv;
+const { h, help, f, s, o, v, version } = argv;
 
 if (h || help) {
   console.log(getHelp(true));
   process.exit(0);
 }
 
-const allowedFormats = ["JSON_RAW", "JSON_COLUMNS", "JSON_ROWS"];
+if (v || version) {
+  console.log(packageJson.version);
+  process.exit(0);
+}
+
+const allowedFormats = ["JSON_RAW", "JSON_COLUMNS", "JSON_ROWS", "CSV"];
 
 if (f && !allowedFormats.includes(f)) {
   console.error(
