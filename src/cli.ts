@@ -37,6 +37,16 @@ if (f && !allowedFormats.includes(f)) {
   process.exit(1);
 }
 
+if (!f) {
+  console.error(
+    `ERROR: Format -f must be provided - allowed values are: ${allowedFormats.join(
+      ", "
+    )}`
+  );
+  console.log(getHelp());
+  process.exit(1);
+}
+
 if (!s) {
   console.error(`ERROR: A minimum of 1 sheet must be provided via -s flag`);
   console.log(getHelp());
