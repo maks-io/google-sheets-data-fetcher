@@ -2,9 +2,12 @@
 
 [![Version](https://img.shields.io/npm/v/google-sheets-data-fetcher)](https://www.npmjs.com/package/google-sheets-data-fetcher)
 
-<img alt="google-sheets-logo" height="60" src="./documentation/gsheetsLogo.png" />
-
 Fetch data from one or multiple google sheets, without any API key.
+
+<img alt="google-sheets-logo" height="60" src="./documentation/gsheetsLogo.png" />
+<br />
+
+[<img alt="google-sheets-logo" src="./documentation/gsdfGif01.gif" />](https://youtube.com/shorts/2O8y8PtoRyY?feature=share)
 
 ## Highlights
 
@@ -18,6 +21,10 @@ Fetch data from one or multiple google sheets, without any API key.
 - small package size ( < 40kB )
 - written in typescript
 - tested via Jest
+
+## Introduction
+
+[![lib-intro-on-youtube](https://img.youtube.com/vi/tq1TBDGVECU/0.jpg)](https://www.youtube.com/watch?v=tq1TBDGVECU)
 
 ## Installation
 
