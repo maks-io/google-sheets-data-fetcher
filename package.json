@@ -1,6 +1,6 @@
 {
   "name": "google-sheets-data-fetcher",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Fetch data from one or multiple google sheets, without any API key.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
@@ -42,19 +42,19 @@
   },
   "homepage": "https://github.com/maks-io/google-sheets-data-fetcher#readme",
   "dependencies": {
-    "axios": "^1.6.1",
+    "axios": "^1.6.8",
     "minimist": "^1.2.8",
     "update-notifier": "^7.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.8",
-    "@types/node": "^20.9.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.4",
     "jest": "^29.7.0",
-    "nodemon": "^3.0.1",
-    "prettier": "^3.1.0",
-    "ts-jest": "^29.1.1",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
     "tsc": "^2.0.4",
     "tsc-alias": "^1.8.8",
-    "typescript": "^5.2.2"
+    "typescript": "^5.4.3"
   }
 }
